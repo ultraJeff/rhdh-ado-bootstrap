@@ -59,10 +59,14 @@ data:
       reading:
         allow:
           - host: raw.githubusercontent.com
+          - host: dev.azure.com
     catalog:
       locations:
         - type: url
           target: https://raw.githubusercontent.com/redhat-appstudio/tssc-sample-templates/release-v1.8.x/all.yaml
+        # Azure DevOps test app
+        - type: url
+          target: ${AZURE_DEVOPS_CATALOG_URL}
       providers:
         keycloakOrg:
           default:
@@ -100,18 +104,19 @@ data:
               seconds: 15
             timeout:
               minutes: 15
-        # Azure DevOps catalog provider - discovers repos with catalog-info.yaml
-        azureDevOps:
-          yourProviderId:
-            organization: ${AZURE_DEVOPS_ORG}
-            project: '*'
-            repository: '*'
-            path: /catalog-info.yaml
-            schedule:
-              frequency:
-                minutes: 30
-              timeout:
-                minutes: 3
+        # Note: Azure DevOps catalog provider requires backstage-plugin-catalog-backend-module-azure
+        # which is not available as a dynamic plugin in RHDH 1.8. Use catalog locations instead.
+        # azureDevOps:
+        #   yourProviderId:
+        #     organization: ${AZURE_DEVOPS_ORG}
+        #     project: '*'
+        #     repository: '*'
+        #     path: /catalog-info.yaml
+        #     schedule:
+        #       frequency:
+        #         minutes: 30
+        #       timeout:
+        #         minutes: 3
         # Microsoft Graph provider - imports users/groups from Entra ID
         # Disabled until Azure credentials are configured
         # microsoftGraphOrg:
@@ -138,9 +143,8 @@ data:
       azure:
         - host: dev.azure.com
           credentials:
-            - clientId: ${AZURE_CLIENT_ID}
-              clientSecret: ${AZURE_CLIENT_SECRET}
-              tenantId: ${AZURE_TENANT_ID}
+            # Use Personal Access Token for Azure DevOps - simpler than OAuth
+            - personalAccessToken: ${AZURE_TOKEN}
     kubernetes:
       serviceLocatorMethod:
         type: multiTenant
