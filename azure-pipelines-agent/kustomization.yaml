@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: azure-pipelines
+
+resources:
+  - namespace.yaml
+  - deployment.yaml
+
+# Note: Secrets must be applied separately before the deployment
+# Run: oc apply -f secrets/agent-secrets.yaml

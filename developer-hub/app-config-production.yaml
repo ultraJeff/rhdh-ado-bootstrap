@@ -69,7 +69,7 @@ data:
           target: ${AZURE_DEVOPS_CATALOG_URL}
         # Azure DevOps Node.js template (from this repo)
         - type: url
-          target: https://raw.githubusercontent.com/ultraJeff/rhdh-bootstrap/main/templates/azure-devops-nodejs-app/template.yaml
+          target: https://github.com/ultraJeff/rhdh-bootstrap/blob/main/templates/azure-devops-nodejs-app/template.yaml
       providers:
         keycloakOrg:
           default:
@@ -136,6 +136,9 @@ data:
         #         seconds: 15
     integrations:
       github:
+        # Public GitHub access for reading templates from public repos
+        - host: github.com
+        # GitHub App integration for org repos
         - host: ${GITHUB_INTEGRATION_HOST_DOMAIN}
           apps:
             - appId: ${GITHUB_INTEGRATION_APP_ID}

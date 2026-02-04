@@ -142,6 +142,10 @@ oc get route -n keycloak -o jsonpath='{.items[0].spec.host}'
 
 ### Azure DevOps Setup
 
+**See [Azure Pipelines Agent + Software Template](docs/AZURE-PIPELINES-AND-SOFTWARE-TEMPLATE.md)** for:
+- Deploying the self-hosted Azure Pipelines agent on OpenShift
+- Fixing **401 Unauthorized** when publishing to Azure DevOps from the software template (PAT must have **Code (Read & write)**)
+
 1. Create an Azure DevOps organization at https://dev.azure.com
 2. Create an Azure Entra ID app registration with permissions:
    - Azure DevOps: `user_impersonation`
