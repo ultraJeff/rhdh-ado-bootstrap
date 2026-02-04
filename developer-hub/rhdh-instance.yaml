@@ -1,0 +1,62 @@
+---
+apiVersion: rhdh.redhat.com/v1alpha3
+kind: Backstage
+metadata:
+  name: developer-hub
+  namespace: rhdh
+  labels:
+    app.kubernetes.io/name: backstage
+    config.openshift.io/component: developer-hub
+    config.openshift.io/managed-by: gitops
+  annotations:
+    # Sync last - requires CRD from operator (wave 1) and secrets (wave 2)
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  # Database configuration - using embedded PostgreSQL for simplicity
+  database:
+    enableLocalDb: true
+  deployment:
+    patch:
+      spec:
+        template:
+          spec:
+            volumes:
+              - $patch: replace
+                name: dynamic-plugins-root
+                persistentVolumeClaim:
+                  claimName: dynamic-plugins-root
+  # Application configuration
+  application:
+    # Reference our dynamic plugins ConfigMap
+    dynamicPluginsConfigMapName: rhdh-dynamic-plugins
+
+    # Use external ConfigMap for app configuration
+    appConfig:
+      configMaps:
+      - name: app-config-rhdh
+      mountPath: /opt/app-root/src
+
+    # Environment variables from Secret
+    extraEnvs:
+      secrets:
+      - name: my-rhdh-secrets
+      - name: keycloak-secrets
+      # Inject the ARGOCD_URL, ARGOCD_USERNAME,
+      # and ARGOCD_PASSWORD into the pod as environment variables
+      - name: argocd-secrets
+      # Azure DevOps integration secrets
+      - name: ado-secrets
+
+    # Mount RBAC policies file
+    extraFiles:
+      mountPath: /opt/app-root/src
+      configMaps:
+        - name: rbac-policies
+
+    # Single replica for development
+    replicas: 1
+
+    # Route configuration
+    route:
+      enabled: true
