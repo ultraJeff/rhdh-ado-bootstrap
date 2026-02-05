@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: azure-devops-nodejs-app
-  title: Node.js App on Azure DevOps
+  name: test-azure-devops-nodejs-app
+  title: TEST Node.js App on Azure DevOps
   description: Create a new Node.js application with TypeScript, hosted on Azure DevOps with CI pipeline
   tags:
     - nodejs
@@ -121,17 +121,18 @@ spec:
       action: http:backstage:request
       input:
         method: POST
-        baseUrl: https://dev.azure.com
-        path: /${{ parameters.organization }}/${{ parameters.project }}/_apis/pipelines?api-version=7.1
-        headers:
-          Content-Type: application/json
-          Authorization: Basic ${{ secrets.AZURE_TOKEN_BASE64 }}
+        # Commented out, since these are set by the proxy in Backstage
+        # baseUrl: https://dev.azure.com
+        # headers:
+        #   Content-Type: application/json
+        #   Authorization: Basic ${{ secrets.AZURE_TOKEN_BASE64 }}
+        path: /proxy/azure-devops/${{ parameters.organization }}/${{ parameters.project }}/_apis/pipelines?api-version=7.1
         body:
           name: ${{ parameters.name }}
           folder: null
           configuration:
             type: yaml
-            path: /azure-pipelines.yaml
+            path: azure-pipelines.yaml
             repository:
               id: ${{ steps['publish'].output.repositoryId }}
               name: ${{ parameters.name }}
