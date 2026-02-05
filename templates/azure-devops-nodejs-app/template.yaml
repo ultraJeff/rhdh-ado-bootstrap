@@ -121,9 +121,11 @@ spec:
       action: http:backstage:request
       input:
         method: POST
-        path: /api/proxy/azure-devops/api/${{ parameters.organization }}/${{ parameters.project }}/_apis/pipelines?api-version=7.1-preview.1
+        baseUrl: https://dev.azure.com
+        path: /${{ parameters.organization }}/${{ parameters.project }}/_apis/pipelines?api-version=7.1
         headers:
           Content-Type: application/json
+          Authorization: Basic ${{ secrets.AZURE_TOKEN_BASE64 }}
         body:
           name: ${{ parameters.name }}
           folder: null

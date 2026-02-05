@@ -136,7 +136,7 @@ data:
         #         seconds: 15
     proxy:
       endpoints:
-        /azure-devops/api:
+        /azure-devops:
           target: https://dev.azure.com
           headers:
             Authorization: Basic ${AZURE_TOKEN_BASE64}
