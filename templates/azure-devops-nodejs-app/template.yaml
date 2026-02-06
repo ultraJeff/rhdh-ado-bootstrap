@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: test-azure-devops-nodejs-app
-  title: TEST Node.js App on Azure DevOps
+  name: azure-devops-nodejs-app
+  title: Node.js App on Azure DevOps
   description: Create a new Node.js application with TypeScript, hosted on Azure DevOps with CI pipeline
   tags:
     - nodejs
