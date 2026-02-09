@@ -144,8 +144,9 @@ data:
           changeOrigin: true
     integrations:
       github:
-        # Public GitHub access for reading templates from public repos
+        # GitHub access with PAT to avoid rate limiting
         - host: github.com
+          token: ${GITHUB_TOKEN}
         # GitHub App integration for org repos
         - host: ${GITHUB_INTEGRATION_HOST_DOMAIN}
           apps:
