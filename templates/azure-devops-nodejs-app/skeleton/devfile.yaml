@@ -12,7 +12,7 @@ metadata:
 components:
   - name: dev
     container:
-      image: registry.redhat.io/devspaces/udi-rhel8:latest
+      image: registry.redhat.io/devspaces/udi-rhel9:latest
       memoryLimit: 4Gi
       memoryRequest: 512Mi
       cpuLimit: "2"
