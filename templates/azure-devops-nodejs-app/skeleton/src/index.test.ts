@@ -29,5 +29,25 @@ describe('${{ values.name }}', () => {
       
       process.env.NODE_ENV = originalEnv;
     });
+
+    it('should default to port 3000', () => {
+      const originalPort = process.env.PORT;
+      delete process.env.PORT;
+      
+      const config = getConfig();
+      expect(config.port).toBe(3000);
+      
+      process.env.PORT = originalPort;
+    });
+
+    it('should use PORT when set', () => {
+      const originalPort = process.env.PORT;
+      process.env.PORT = '8080';
+      
+      const config = getConfig();
+      expect(config.port).toBe(8080);
+      
+      process.env.PORT = originalPort;
+    });
   });
 });
