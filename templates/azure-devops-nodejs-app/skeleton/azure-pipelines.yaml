@@ -34,7 +34,7 @@ stages:
               npm --version
             displayName: 'Install Node.js 20'
 
-          - script: npm ci
+          - script: npm install
             displayName: 'Install dependencies'
 
           # - script: npm run lint
@@ -109,4 +109,70 @@ stages:
               echo "Would push to: $(IMAGE_URL):$(Build.BuildId)"
               exit 1
             displayName: 'Build for ACR (not implemented)'
+            condition: eq(variables['IMAGE_REGISTRY'], 'acr')
+
+  - stage: Deploy
+    displayName: 'Deploy to OpenShift'
+    dependsOn: BuildImage
+    jobs:
+      - job: DeployJob
+        displayName: 'Deploy Application'
+        steps:
+          - script: |
+              echo "Deploying $(APP_NAME) to namespace $(NAMESPACE)"
+              echo "Using image: $(IMAGE_URL):$(Build.BuildId)"
+            displayName: 'Show deployment info'
+
+          - script: |
+              # Install oc CLI if not present
+              if ! command -v oc &> /dev/null; then
+                echo "Installing oc CLI..."
+                curl -sLO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz
+                tar -xzf openshift-client-linux.tar.gz
+                sudo mv oc /usr/local/bin/
+                rm -f openshift-client-linux.tar.gz kubectl
+              fi
+              oc version --client
+            displayName: 'Install OpenShift CLI'
+
+          - script: |
+              # Check if deployment exists
+              if oc get deployment $(APP_NAME) -n $(NAMESPACE) &> /dev/null; then
+                echo "Updating existing deployment..."
+                oc set image deployment/$(APP_NAME) \
+                  $(APP_NAME)=$(IMAGE_URL):$(Build.BuildId) \
+                  -n $(NAMESPACE)
+                oc rollout status deployment/$(APP_NAME) -n $(NAMESPACE) --timeout=300s
+              else
+                echo "Creating new deployment..."
+                # Create Deployment
+                oc create deployment $(APP_NAME) \
+                  --image=$(IMAGE_URL):$(Build.BuildId) \
+                  -n $(NAMESPACE)
+                
+                # Wait for deployment to be ready
+                oc rollout status deployment/$(APP_NAME) -n $(NAMESPACE) --timeout=300s
+                
+                # Expose the deployment as a service on port 3000
+                oc expose deployment $(APP_NAME) \
+                  --port=3000 \
+                  --target-port=3000 \
+                  -n $(NAMESPACE)
+                
+                # Create a route to expose the service externally
+                oc expose service $(APP_NAME) \
+                  -n $(NAMESPACE)
+              fi
+              
+              # Get the route URL
+              ROUTE_URL=$(oc get route $(APP_NAME) -n $(NAMESPACE) -o jsonpath='{.spec.host}')
+              echo "Application deployed successfully!"
+              echo "Access your application at: http://${ROUTE_URL}"
+            displayName: 'Deploy to OpenShift'
+            condition: eq(variables['IMAGE_REGISTRY'], 'openshift')
+
+          - script: |
+              echo "ACR deployment not yet implemented"
+              exit 1
+            displayName: 'Deploy from ACR (not implemented)'
             condition: eq(variables['IMAGE_REGISTRY'], 'acr')
