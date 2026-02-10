@@ -72,6 +72,9 @@ data:
         # Azure DevOps Node.js template (from this repo)
         - type: url
           target: https://github.com/${GITHUB_ORG}/rhdh-ado-bootstrap/blob/main/templates/azure-devops-nodejs-app/template.yaml
+        # Trigger Azure Pipeline template
+        - type: url
+          target: https://github.com/${GITHUB_ORG}/rhdh-ado-bootstrap/blob/main/templates/trigger-azure-pipeline/template.yaml
         # Platform documentation
         - type: url
           target: https://github.com/${GITHUB_ORG}/rhdh-ado-bootstrap/blob/main/docs/catalog-info.yaml

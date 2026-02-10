@@ -1,0 +1,81 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: trigger-azure-pipeline
+  title: Trigger Azure Pipeline Build
+  description: Trigger a CI/CD pipeline build in Azure DevOps for an existing component
+  tags:
+    - azure-devops
+    - ci-cd
+    - build
+spec:
+  owner: user:default/admin
+  type: service
+
+  parameters:
+    - title: Select Component
+      required:
+        - component
+      properties:
+        component:
+          title: Component
+          type: string
+          description: Select a component from the catalog to build
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Component
+
+    - title: Azure DevOps Pipeline
+      required:
+        - organization
+        - project
+        - pipelineId
+      properties:
+        organization:
+          title: Azure DevOps Organization
+          type: string
+          description: Your Azure DevOps organization name
+          default: jefrfranklin
+        project:
+          title: Azure DevOps Project
+          type: string
+          description: The Azure DevOps project containing the pipeline
+          default: a-project
+        pipelineId:
+          title: Pipeline ID
+          type: string
+          description: The numeric ID of the pipeline to trigger
+        branch:
+          title: Branch
+          type: string
+          description: Branch to build (defaults to main)
+          default: main
+
+  steps:
+    - id: log-trigger
+      name: Log Build Request
+      action: debug:log
+      input:
+        message: "Triggering pipeline ${{ parameters.pipelineId }} for component ${{ parameters.component }} on branch ${{ parameters.branch }}"
+
+    - id: trigger-pipeline
+      name: Trigger Azure Pipeline
+      action: http:backstage:request
+      input:
+        method: POST
+        headers:
+          content-type: 'application/json'
+        path: /proxy/azure-devops/${{ parameters.organization }}/${{ parameters.project }}/_apis/pipelines/${{ parameters.pipelineId }}/runs?api-version=7.1
+        body:
+          resources:
+            repositories:
+              self:
+                refName: refs/heads/${{ parameters.branch }}
+
+  output:
+    links:
+      - title: View Pipeline Run
+        url: https://dev.azure.com/${{ parameters.organization }}/${{ parameters.project }}/_build/results?buildId=${{ steps['trigger-pipeline'].output.body.id }}
+      - title: View All Pipelines
+        url: https://dev.azure.com/${{ parameters.organization }}/${{ parameters.project }}/_build
