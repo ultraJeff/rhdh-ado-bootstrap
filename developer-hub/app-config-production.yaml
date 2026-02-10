@@ -142,6 +142,7 @@ data:
             Authorization: Basic ${AZURE_TOKEN_BASE64}
             content-type: 'application/json'
           changeOrigin: true
+          logLevel: debug
     integrations:
       github:
         # GitHub access with PAT to avoid rate limiting
