@@ -33,6 +33,8 @@ data:
     p, role:default/plugins, orchestrator.workflow.use, update, allow
     p, role:default/plugins, orchestrator.workflowAdminView, read, allow
     p, role:default/plugins, orchestrator.instanceAdminView, read, allow
+    # Adoption Insights - analytics dashboard access
+    p, role:default/plugins, adoption-insights.events.read, read, allow
     g, user:default/admin, role:default/location_read
     g, user:default/admin, role:default/platformengineer
     g, user:default/admin, role:default/scaffolder_execute
