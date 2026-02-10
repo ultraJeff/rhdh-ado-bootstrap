@@ -13,9 +13,9 @@ data:
       # Keycloak integration
       - package: ./dynamic-plugins/dist/backstage-community-plugin-catalog-backend-module-keycloak-dynamic
         disabled: false
-      # GitHub integration
-      - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-dynamic
-        disabled: false
+      # GitHub catalog discovery - disabled to avoid conflicts with explicit catalog locations
+      # - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-dynamic
+      #   disabled: false
       # GitHub Org provider - disabled (requires specific catalog.providers.githubOrg config format)
       # - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-org-dynamic
       #   disabled: false
