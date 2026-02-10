@@ -16,8 +16,9 @@ data:
       # GitHub integration
       - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-dynamic
         disabled: false
-      - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-org-dynamic
-        disabled: false
+      # GitHub Org provider - disabled (requires specific catalog.providers.githubOrg config format)
+      # - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-org-dynamic
+      #   disabled: false
       # Kubernetes integration
       - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
         disabled: false
@@ -26,11 +27,11 @@ data:
       # Topology view
       - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
         disabled: false
-      # ArgoCD integration
-      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
-        disabled: false
-      - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
-        disabled: false
+      # ArgoCD integration - disabled (not installed in this cluster)
+      # - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
+      #   disabled: false
       # RBAC
       - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
         disabled: false

@@ -14,14 +14,15 @@ data:
     app:
       title: Red Hat Developer Hub
       baseUrl: ${BACKEND_URL}
-    argocd:
-      appLocatorMethods:
-        - type: config
-          instances:
-            - name: argocd
-              url: ${ARGOCD_URL}
-              username: ${ARGOCD_USERNAME}
-              password: ${ARGOCD_PASSWORD}
+    # ArgoCD - disabled (not installed in this cluster)
+    # argocd:
+    #   appLocatorMethods:
+    #     - type: config
+    #       instances:
+    #         - name: argocd
+    #           url: ${ARGOCD_URL}
+    #           username: ${ARGOCD_USERNAME}
+    #           password: ${ARGOCD_PASSWORD}
     signInPage: oidc
     auth:
       session:
@@ -73,13 +74,13 @@ data:
         # Platform documentation
         - type: url
           target: https://github.com/${GITHUB_ORG}/rhdh-ado-bootstrap/blob/main/docs/catalog-info.yaml
-        # Utilities microservices - uncomment and update org if using these demos
-        # - type: url
-        #   target: https://github.com/${GITHUB_ORG}/utilities-gateway/blob/main/catalog-info.yaml
-        # - type: url
-        #   target: https://github.com/${GITHUB_ORG}/utilities-weather/blob/main/catalog-info.yaml
-        # - type: url
-        #   target: https://github.com/${GITHUB_ORG}/utilities-quotes/blob/main/catalog-info.yaml
+        # Utilities microservices
+        - type: url
+          target: https://github.com/${GITHUB_ORG}/utilities-gateway/blob/main/catalog-info.yaml
+        - type: url
+          target: https://github.com/${GITHUB_ORG}/utilities-weather/blob/main/catalog-info.yaml
+        - type: url
+          target: https://github.com/${GITHUB_ORG}/utilities-quotes/blob/main/catalog-info.yaml
       providers:
         keycloakOrg:
           default:
@@ -95,40 +96,42 @@ data:
                 minutes: 3
               initialDelay:
                 seconds: 15
-        github:
-          providerId:
-            organization: "${GITHUB_INTEGRATION_ORGANIZATION}"
-            schedule:
-              frequency:
-                minutes: 30
-              initialDelay:
-                seconds: 15
-              timeout:
-                minutes: 15
-        githubOrg:
-          id: githubOrg
-          githubUrl: "https://github.com"
-          orgs:
-            - ${GITHUB_INTEGRATION_ORGANIZATION}
-          schedule:
-            frequency:
-              minutes: 30
-            initialDelay:
-              seconds: 15
-            timeout:
-              minutes: 15
-        # GitHub discovery for repos with catalog-info.yaml
-        githubDiscovery:
-          default:
-            organization: ${GITHUB_ORG}
-            catalogPath: /catalog-info.yaml
-            schedule:
-              frequency:
-                minutes: 10
-              initialDelay:
-                seconds: 30
-              timeout:
-                minutes: 3
+        # GitHub provider - disabled to avoid conflicts with explicit catalog locations
+        # github:
+        #   providerId:
+        #     organization: "${GITHUB_INTEGRATION_ORGANIZATION}"
+        #     schedule:
+        #       frequency:
+        #         minutes: 30
+        #       initialDelay:
+        #         seconds: 15
+        #       timeout:
+        #         minutes: 15
+        # GitHub Org provider - disabled (plugin requires specific config format)
+        # githubOrg:
+        #   id: githubOrg
+        #   githubUrl: "https://github.com"
+        #   orgs:
+        #     - ${GITHUB_INTEGRATION_ORGANIZATION}
+        #   schedule:
+        #     frequency:
+        #       minutes: 30
+        #     initialDelay:
+        #       seconds: 15
+        #     timeout:
+        #       minutes: 15
+        # GitHub discovery - disabled to avoid conflicts with explicit catalog locations
+        # githubDiscovery:
+        #   default:
+        #     organization: ${GITHUB_ORG}
+        #     catalogPath: /catalog-info.yaml
+        #     schedule:
+        #       frequency:
+        #         minutes: 10
+        #       initialDelay:
+        #         seconds: 30
+        #       timeout:
+        #         minutes: 3
         # Note: Azure DevOps catalog provider requires backstage-plugin-catalog-backend-module-azure
         # which is not available as a dynamic plugin in RHDH 1.8. Use catalog locations instead.
         # azureDevOps:
