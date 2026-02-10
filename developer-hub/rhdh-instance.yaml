@@ -21,6 +21,8 @@ spec:
       spec:
         template:
           spec:
+            # Required for Kubernetes/Topology plugins to authenticate
+            automountServiceAccountToken: true
             volumes:
               - $patch: replace
                 name: dynamic-plugins-root
