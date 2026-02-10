@@ -60,6 +60,7 @@ data:
       reading:
         allow:
           - host: raw.githubusercontent.com
+          - host: github.com
           - host: dev.azure.com
     catalog:
       locations:
