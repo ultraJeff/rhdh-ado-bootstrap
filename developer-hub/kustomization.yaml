@@ -11,6 +11,7 @@ resources:
 - dynamic-plugins-root-pvc.yaml
 - app-config-production.yaml
 - rbac-policies.yaml
+- kubernetes-rbac.yaml
 - rhdh-instance.yaml
 
 commonLabels:
