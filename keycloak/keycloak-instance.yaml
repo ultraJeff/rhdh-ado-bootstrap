@@ -23,6 +23,8 @@ spec:
   proxy:
     headers: xforwarded
   hostname:
+    # IMPORTANT: Update this to your cluster domain
+    # Format: sso.apps.<cluster-domain>
     hostname: sso.apps.CLUSTER_DOMAIN_PLACEHOLDER
   ingress:
     enabled: true

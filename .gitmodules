@@ -1,3 +1,0 @@
-[submodule "test-app"]
-	path = test-app
-	url = https://dev.azure.com/jefrfranklin/a-project/_git/ado-test-app

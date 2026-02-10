@@ -2,6 +2,13 @@
 *-secrets.yaml
 !*-secrets.yaml.example
 
+# Environment files with sensitive data
+.env
+.env.local
+
+# Local configuration overrides
+local-config.yaml
+
 # Keycloak realm with real secrets
 keycloak/rhdh-realm-import.yaml
 !keycloak/rhdh-realm-import.yaml.example

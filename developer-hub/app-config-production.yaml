@@ -69,14 +69,14 @@ data:
           target: ${AZURE_DEVOPS_CATALOG_URL}
         # Azure DevOps Node.js template (from this repo)
         - type: url
-          target: https://github.com/ultraJeff/rhdh-ado-bootstrap/blob/main/templates/azure-devops-nodejs-app/template.yaml
-        # Utilities microservices (GitHub ultraJeff)
-        - type: url
-          target: https://github.com/ultraJeff/utilities-gateway/blob/main/catalog-info.yaml
-        - type: url
-          target: https://github.com/ultraJeff/utilities-weather/blob/main/catalog-info.yaml
-        - type: url
-          target: https://github.com/ultraJeff/utilities-quotes/blob/main/catalog-info.yaml
+          target: https://github.com/${GITHUB_ORG}/rhdh-ado-bootstrap/blob/main/templates/azure-devops-nodejs-app/template.yaml
+        # Utilities microservices - uncomment and update org if using these demos
+        # - type: url
+        #   target: https://github.com/${GITHUB_ORG}/utilities-gateway/blob/main/catalog-info.yaml
+        # - type: url
+        #   target: https://github.com/${GITHUB_ORG}/utilities-weather/blob/main/catalog-info.yaml
+        # - type: url
+        #   target: https://github.com/${GITHUB_ORG}/utilities-quotes/blob/main/catalog-info.yaml
       providers:
         keycloakOrg:
           default:
@@ -103,7 +103,7 @@ data:
               timeout:
                 minutes: 15
         githubOrg:
-          id: ultraJeffOrg
+          id: githubOrg
           githubUrl: "https://github.com"
           orgs:
             - ${GITHUB_INTEGRATION_ORGANIZATION}
@@ -114,10 +114,10 @@ data:
               seconds: 15
             timeout:
               minutes: 15
-        # GitHub discovery for ultraJeff repos with catalog-info.yaml
+        # GitHub discovery for repos with catalog-info.yaml
         githubDiscovery:
-          ultraJeff:
-            organization: ultraJeff
+          default:
+            organization: ${GITHUB_ORG}
             catalogPath: /catalog-info.yaml
             schedule:
               frequency:

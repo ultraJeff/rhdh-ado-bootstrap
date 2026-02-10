@@ -47,12 +47,18 @@ spec:
           title: Azure DevOps Organization
           type: string
           description: Your Azure DevOps organization name
-          default: jefrfranklin
         project:
           title: Azure DevOps Project
           type: string
           description: The Azure DevOps project to create the repo in
-          default: a-project
+
+    - title: Development Environment
+      properties:
+        devSpacesUrl:
+          title: Dev Spaces URL
+          type: string
+          description: Base URL for OpenShift Dev Spaces (leave empty to disable Dev Spaces link)
+          ui:placeholder: "https://devspaces.apps.your-cluster.example.com"
 
     - title: Container Registry
       required:
@@ -107,6 +113,7 @@ spec:
           imageRegistry: ${{ parameters.imageRegistry }}
           namespace: ${{ parameters.namespace }}
           acrName: ${{ parameters.acrName }}
+          devSpacesUrl: ${{ parameters.devSpacesUrl }}
 
     - id: publish
       name: Publish to Azure DevOps
