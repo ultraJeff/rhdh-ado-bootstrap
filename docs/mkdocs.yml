@@ -1,0 +1,19 @@
+site_name: Platform Documentation
+site_description: Developer Hub Platform Documentation
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Overview: getting-started/overview.md
+    - Prerequisites: getting-started/prerequisites.md
+  - Azure DevOps:
+    - Integration: azure-devops/integration.md
+    - Pipelines: azure-devops/pipelines.md
+    - Authentication: azure-devops/authentication.md
+  - Software Templates:
+    - Node.js App Template: templates/nodejs-app.md
+  - Orchestrator:
+    - Workflows: orchestrator/workflows.md
+
+plugins:
+  - techdocs-core

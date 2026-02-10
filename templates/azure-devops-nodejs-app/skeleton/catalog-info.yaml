@@ -8,6 +8,7 @@ metadata:
     dev.azure.com/build-definition: ${{ values.name }}-ci
     backstage.io/kubernetes-id: ${{ values.name }}
     backstage.io/kubernetes-namespace: ${{ values.namespace }}
+    backstage.io/techdocs-ref: dir:.
   tags:
     - nodejs
     - typescript
