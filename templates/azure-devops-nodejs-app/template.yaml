@@ -80,7 +80,7 @@ spec:
           title: OpenShift Namespace
           type: string
           description: Namespace to deploy the application to
-          default: default
+          default: a-project
       dependencies:
         acrName:
           - imageRegistry
