@@ -47,10 +47,12 @@ spec:
           title: Azure DevOps Organization
           type: string
           description: Your Azure DevOps organization name
+          default: jefrfranklin
         project:
           title: Azure DevOps Project
           type: string
           description: The Azure DevOps project to create the repo in
+          default: a-project
 
     - title: Development Environment
       properties:
