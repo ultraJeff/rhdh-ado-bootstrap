@@ -17,11 +17,9 @@ metadata:
     - url: https://dev.azure.com/${{ values.organization }}/${{ values.project }}/_git/${{ values.name }}
       title: Azure DevOps Repo
       icon: source
-{%- if values.devSpacesUrl %}
     - url: ${{ values.devSpacesUrl }}/f?url=https://dev.azure.com/${{ values.organization }}/${{ values.project }}/_git/${{ values.name }}
       title: Open in Dev Spaces
       icon: cloud
-{%- endif %}
 spec:
   type: service
   lifecycle: experimental

@@ -17,6 +17,10 @@ keycloak/rhdh-realm-import.yaml
 keycloak/secrets/keycloak-db-secret.yaml
 !keycloak/secrets/keycloak-db-secret.yaml.example
 
+# Templates with cluster-specific values
+templates/azure-devops-nodejs-app/template.yaml
+!templates/azure-devops-nodejs-app/template.yaml.example
+
 # macOS
 .DS_Store
 
